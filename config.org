@@ -1,34 +1,58 @@
 #+TITLE: Emacs Configuration
-#+AUTHOR: Your Name Here
+#+AUTHOR: Eduardo de Oliveira Padoan
 
-Boilerplate for a ~/.emacs.d/config.org emacs configuration using
-"Sane Defaults".
+* Files and paths
 
-Steps to making this file yours:
+** init.el
+   Main configuration file
+** keys.el
+   Custom Keybings
+** funcs.el
+   Custom Functions
+** alias.el
+   Command Aliases
+** python.el
+   Python options
+** lisp/
+   Other emacs-lisp sources
+** snippets/
+   Yasnippet collection
+** backups/ and auto-save-list/
+   Backups and auto-saves files (not versioned)
 
-1) Change all instances of "Your Name Here" to your name.
-2) Change all instances of "your@email.here" to your email address.
-3) Create ~/.emacs.d/custom.el even if it's empty.
-   Emacs will now write your (interactive) customizations to that
-   file. 
-4) Change the Sane Defaults if you need to. 
-   For example if you read and write Chinese and so prefer to default
-   to utf-16.
-5) Teach yourself what goes into your backup directories
-   ~/.emacs.d/backups
-   ~/.emacs.d/auto-save-list
-   So you'll know where to look for older versions of files that
-   you've edited. 
-6) Delete these instructions and replace them with a personalized
-   introduction. 
+#+begin_src emacs-lisp
+(load-file "~/.emacs.d/keys.el")
+(load-file "~/.emacs.d/funcs.el")
+(load-file "~/.emacs.d/alias.el")
+(load-file "~/.emacs.d/python.el")
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;; Registers
+;; 'C-x r j i' -> this file
+(set-register ?i '(file . "~/.emacs.d/init.el"))
+;; 'C-x r j f' -> functions
+(set-register ?f '(file . "~/.emacs.d/funcs.el"))
+;; 'C-x r j k' -> keybindings
+(set-register ?k '(file . "~/.emacs.d/keys.el"))
+;; 'C-x r j a' -> aliases
+(set-register ?a '(file . "~/.emacs.d/alias.el"))
+;; 'C-x r j p' -> python confs
+(set-register ?a '(file . "~/.emacs.d/python.el"))
+
+;; Keep all backup and auto-save files in one directory
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+#+end_src
+
 
 * Personal Information
 
 #+begin_src emacs-lisp
-(setq user-full-name "Your Name Here"
-      user-mail-address "your@email.here")
+(setq user-full-name "Eduardo de Oliveira Padoan"
+      user-mail-address "eduardo.padoan@gmail.com")
 #+end_src
-
+  
 * Customize settings
 
 Set up the customize file to its own separate file, instead of saving
@@ -54,10 +78,6 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Keep all backup and auto-save files in one directory
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
@@ -94,6 +114,9 @@ Sources for this section include [[https://github.com/magnars/.emacs.d/blob/mast
 
 ;; Don't beep at me
 (setq visible-bell t)
+
+;; Move files to trash when deleting
+(setq delete-by-moving-to-trash t)
 #+end_src
 
 The following function for ~occur-dwim~ is taken from [[https://github.com/abo-abo][Oleh Krehel]] from
